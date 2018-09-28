@@ -13,6 +13,7 @@
 #include "parse/command.h"
 #include "parse/parse.tab.h"
 
+
 typedef struct yy_buffer_state * YY_BUFFER_STATE;
 extern int parse();
 extern YY_BUFFER_STATE yy_scan_string(char *);
