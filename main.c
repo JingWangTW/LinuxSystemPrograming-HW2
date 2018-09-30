@@ -7,8 +7,6 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <pwd.h>
-#include <readline/readline.h>
-#include <readline/history.h>
 
 #include "parse/command.h"
 #include "parse/parse.tab.h"
@@ -88,6 +86,7 @@ void doShell()
         execute_command_list(commands);
     }
     
+    free(input);
     free_command_list (commands);
     commands = NULL;
     command = NULL;
@@ -97,29 +96,16 @@ char * getInput()
 {
     char * prefix = getPrefix();
     
-    static char * command = NULL;
+    char * command = (char *) malloc(sizeof(char) * 100);
     
-    command = readline(prefix);
+    printf("%s", prefix);
     
-    if (command && *command)
-    {
-        add_history(command);
-    }
-    
-    return command;
+    scanf(" %100[^\n]", command);
     
     free(prefix);
-        
-    /*
-    char * command = (char *) malloc (sizeof(char) * sysconf(_SC_ARG_MAX));
-    
-    fgets(command, sysconf(_SC_ARG_MAX), stdin);
-    
-    command[strlen(command)-1] = '\0';
     
     return command;
     
-    */
 }
 
 char * getPrefix()
